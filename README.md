@@ -1,2 +1,2 @@
-# API-Testing-using-Postman
-This repository is all about the practice work of API Testing using Postman Tool.
+# API Testing using Postman
+Currently i'm working on this repository. I will update this repository very soon.
