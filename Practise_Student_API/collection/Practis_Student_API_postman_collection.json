@@ -1,0 +1,401 @@
+{
+	"info": {
+		"_postman_id": "ab048a48-c2c6-423e-be58-8431a975b17b",
+		"name": "Practise Student API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17855925"
+	},
+	"item": [
+		{
+			"name": "Get Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/studentsDetails",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"id\", jsonData.id);\r",
+							"pm.environment.set(\"first_name\", jsonData.first_name);\r",
+							"pm.environment.set(\"middle_name\", jsonData.middle_name);\r",
+							"pm.environment.set(\"last_name\", jsonData.last_name);\r",
+							"pm.environment.set(\"date_of_birth\", jsonData.date_of_birth);\r",
+							"\r",
+							"const first_name= pm.environment.get(\"first_name\");\r",
+							"const middle_name= pm.environment.get(\"middle_name\");\r",
+							"const last_name= pm.environment.get(\"last_name\");\r",
+							"const date_of_birth= pm.environment.get(\"date_of_birth\");\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check First name\", function () {\r",
+							"    pm.expect(jsonData.first_name).contains(first_name);\r",
+							"});\r",
+							"pm.test(\"Check Middle name\", function () {\r",
+							"    pm.expect(jsonData.middle_name).contains(middle_name);\r",
+							"});\r",
+							"pm.test(\"Check Last name\", function () {\r",
+							"    pm.expect(jsonData.last_name).contains(last_name);\r",
+							"});\r",
+							"pm.test(\"Check Date of Birth\", function () {\r",
+							"    pm.expect(jsonData.date_of_birth).contains(date_of_birth);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"first_name\": \"Sonia\",\r\n \"middle_name\": \"Rahman\",\r\n \"last_name\": \"Khan\",\r\n \"date_of_birth\": \"26 dec 1998\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/studentsDetails",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"first_name\", jsonData.first_name);\r",
+							"pm.environment.set(\"middle_name\", jsonData.middle_name);\r",
+							"pm.environment.set(\"last_name\", jsonData.last_name);\r",
+							"pm.environment.set(\"date_of_birth\", jsonData.date_of_birth);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status value validation\", function () {\r",
+							"    pm.expect(jsonData.status).contains(\"true\");\r",
+							"});\r",
+							"pm.test(\"msg value validation\", function () {\r",
+							"    pm.expect(jsonData.msg).contains(\"update  data success\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const firstName= \"Sonia\"\r",
+							"const middleName= \"Akhter\"\r",
+							"const lastName= \"Khan\"\r",
+							"const dateOfBirth= \"26 dec 1998\"\r",
+							"\r",
+							"pm.environment.set(\"firstName\", firstName);\r",
+							"pm.environment.set(\"middleName\", middleName);\r",
+							"pm.environment.set(\"lastName\", lastName);\r",
+							"pm.environment.set(\"dateOfBirth\", dateOfBirth);\r",
+							" "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"id\":{{id}},\r\n \"first_name\": \"{{firstName}}\",\r\n \"middle_name\": \"{{middleName}}\",\r\n \"last_name\": \"{{lastName}}\",\r\n \"date_of_birth\": \"{{dateOfBirth}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Specific Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"const first_name= pm.environment.get(\"firstName\");\r",
+							"const middle_name= pm.environment.get(\"middleName\");\r",
+							"const last_name= pm.environment.get(\"lastName\");\r",
+							"const date_of_birth= pm.environment.get(\"dateOfBirth\");\r",
+							"const id= pm.environment.get(\"id\");\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Status value validation\", function () {\r",
+							"    pm.expect(jsonData.status).contains(\"true\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check ID\", function () {\r",
+							"    pm.expect(jsonData.data.id).to.eql(id);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check First name\", function () {\r",
+							"    pm.expect(jsonData.data.first_name).contains(first_name);\r",
+							"});\r",
+							"pm.test(\"Check Middle name\", function () {\r",
+							"    pm.expect(jsonData.data.middle_name).contains(middle_name);\r",
+							"});\r",
+							"pm.test(\"Check Last name\", function () {\r",
+							"    pm.expect(jsonData.data.last_name).contains(last_name);\r",
+							"});\r",
+							"pm.test(\"Check Date of Birth\", function () {\r",
+							"    pm.expect(jsonData.data.date_of_birth).contains(date_of_birth);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"    \r",
+							"\r",
+							"   \r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Student Address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status value validation\", function () {\r",
+							"    pm.expect(jsonData.status).contains(\"true\");\r",
+							"});\r",
+							"pm.test(\"msg value validation\", function () {\r",
+							"    pm.expect(jsonData.msg).contains(\"Add  data success\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"Permanent_Address\": {\r\n \"House_Number\": \"sample string 1\",\r\n \"City\": \"sample string 2\",\r\n \"State\": \"sample string 3\",\r\n \"Country\": \"sample string 4\",\r\n \"PhoneNumber\": [\r\n {\r\n \"Std_Code\": \"sample string 1\",\r\n \"Home\": \"sample string 2\",\r\n \"Mobile\": \"sample string 3\"\r\n },\r\n {\r\n \"Std_Code\": \"sample string 1\",\r\n \"Home\": \"sample string 2\",\r\n \"Mobile\": \"sample string 3\"\r\n }\r\n ]\r\n },\r\n \"stId\": {{id}}\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/addresses",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"addresses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Final Student Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"console.log(jsonData);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status value validation\", function () {\r",
+							"    pm.expect(jsonData.status).contains(\"true\");\r",
+							"});\r",
+							"pm.test(\"House Number validation\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.House_Number).contains(\"sample string 1\");\r",
+							"});\r",
+							"pm.test(\"City validation\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.City).contains(\"sample string 2\");\r",
+							"});\r",
+							"pm.test(\"Country validation\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.Country).contains(\"sample string 4\");\r",
+							"});\r",
+							"pm.test(\"Mobile validation\", function () {\r",
+							"    pm.expect(jsonData.data.Address[0].Permanent_Address.PhoneNumber[0].Mobile).contains(\"sample string 3\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/FinalStudentDetails/{{id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"FinalStudentDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status value validation\", function () {\r",
+							"    pm.expect(jsonData.status).contains(\"true\");\r",
+							"});\r",
+							"pm.test(\"msg value validation\", function () {\r",
+							"    pm.expect(jsonData.msg).contains(\"Delete  data success\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"postman.setNextRequest(null);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
